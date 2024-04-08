@@ -3,6 +3,7 @@ package com.crud.controllers;
 import com.crud.entities.Product;
 import com.crud.entities.RequestProduct;
 import com.crud.repositorys.ProductRepository;
+import com.crud.services.ProducService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -17,6 +18,9 @@ public class ProductController {
 
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private ProducService producService;
 
     @GetMapping
     public ResponseEntity getProducts() {
@@ -53,4 +57,13 @@ public class ProductController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> deleteProduct(@PathVariable String id) {
+        Product product = producService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
+
+
 }
